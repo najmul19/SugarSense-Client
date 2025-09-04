@@ -24,45 +24,82 @@ export default function HomeScreen() {
   }
 };
 
+const [prediction, setPrediction] = useState<string | null>(null);
 
-  const handleSubmit = async () => {
-    setSubmitted(true);
-    for (const key in form) {
-      if (form[key as keyof typeof form] === "") {
-        Alert.alert("Missing Information", `Please fill in the ${key} field`);
-        return;
-      }
-    }
+//   const handleSubmit = async () => {
+//     setSubmitted(true);
+//     for (const key in form) {
+//       if (form[key as keyof typeof form] === "") {
+//         Alert.alert("Missing Information", `Please fill in the ${key} field`);
+//         return;
+//       }
+//     }
     
-    try {
-      const response = await fetch("https://sugarsense-server.onrender.com/predict", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        // body: JSON.stringify(form),
-        body: JSON.stringify(
-  Object.fromEntries(
-    Object.entries(form).map(([k, v]) => [k, Number(v)])
-  )
-),
+//     try {
+//       const response = await fetch("https://sugarsense-server.onrender.com/predict", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         // body: JSON.stringify(form),
+//         body: JSON.stringify(
+//   Object.fromEntries(
+//     Object.entries(form).map(([k, v]) => [k, Number(v)])
+//   )
+// ),
 
-      });
+//       });
 
-      const result = await response.json();
-      if (result.prediction) {
-        Alert.alert("Diabetes Prediction", result.prediction);
+//       const result = await response.json();
+//       if (result.prediction) {
+//         Alert.alert("Diabetes Prediction", result.prediction);
 
-        Alert.alert("Diabetes Prediction Result", 
-          `Based on the information provided:\n\n${result.prediction === "Diabetic" ? 
-          "Our analysis indicates a higher risk of diabetes. We recommend consulting with a healthcare professional for further evaluation." : 
-          "Our analysis indicates a lower risk of diabetes. Maintain a healthy lifestyle with regular checkups."}`);
-      } else {
-        Alert.alert("Analysis Error", result.error || "Unable to process your information. Please try again.");
-      }
-    } catch (error) {
-      console.error(error);
-      Alert.alert("Connection Error", "Failed to connect to the prediction service. Please check your connection and try again.");
+//         Alert.alert("Diabetes Prediction Result", 
+//           `Based on the information provided:\n\n${result.prediction === "Diabetic" ? 
+//           "Our analysis indicates a higher risk of diabetes. We recommend consulting with a healthcare professional for further evaluation." : 
+//           "Our analysis indicates a lower risk of diabetes. Maintain a healthy lifestyle with regular checkups."}`);
+//       } else {
+//         Alert.alert("Analysis Error", result.error || "Unable to process your information. Please try again.");
+//       }
+//     } catch (error) {
+//       console.error(error);
+//       Alert.alert("Connection Error", "Failed to connect to the prediction service. Please check your connection and try again.");
+//     }
+//   };
+
+
+const handleSubmit = async () => {
+  setSubmitted(true);
+  for (const key in form) {
+    if (form[key as keyof typeof form] === "") {
+      Alert.alert("Missing Information", `Please fill in the ${key} field`);
+      return;
     }
-  };
+  }
+
+  try {
+    const response = await fetch("https://sugarsense-server.onrender.com/predict", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(
+        Object.fromEntries(
+          Object.entries(form).map(([k, v]) => [k, Number(v)])
+        )
+      ),
+    });
+
+    const result = await response.json();
+    if (result.prediction) {
+      setPrediction(result.prediction); 
+    } else {
+      Alert.alert("Analysis Error", result.error || "Unable to process your information. Please try again.");
+    }
+  } catch (error) {
+    console.error(error);
+    Alert.alert("Connection Error", "Failed to connect to the prediction service. Please check your connection and try again.");
+  }
+};
+
+
+
 
   const formSections = [
     {
@@ -258,28 +295,44 @@ const fieldOptions = {
         </View>
         
         <View style={styles.exampleBox}>
-  <Text style={styles.exampleTitle}>How to Fill the Form:</Text>
-  <Text style={styles.exampleText}>
-    GenHlth: 3 (General Health, 1=Excellent → 5=Poor){"\n"}
-    HighBP: 1 (High Blood Pressure, 0=No, 1=Yes){"\n"}
-    BMI: 25 (Body Mass Index){"\n"}
-    Age: 9 (Age Category, see dropdown){"\n"}
-    HighChol: 0 (High Cholesterol, 0=No, 1=Yes){"\n"}
-    CholCheck: 1 (Cholesterol Check in 5 Years, 0=No, 1=Yes){"\n"}
-    Income: 6 (Income Level, see dropdown){"\n"}
-    Sex: 0 (0=Female, 1=Male){"\n"}
-    HeartDiseaseorAttack: 0 (0=No, 1=Yes){"\n"}
-    HvyAlcoholConsump: 0 (0=No, 1=Yes){"\n"}
-    AnyHealthcare: 1 (0=No, 1=Yes){"\n"}
-    DiffWalk: 0 (0=No, 1=Yes){"\n"}
-    PhysActivity: 1 (0=No, 1=Yes){"\n"}
-    Smoker: 1 (0=No, 1=Yes){"\n"}
-    Veggies: 1 (0=No, 1=Yes){"\n"}
-    Fruits: 0 (0=No, 1=Yes){"\n"}
-    Education: 5 (Education Level, see dropdown){"\n"}
-    Stroke: 0 (0=No, 1=Yes)
-  </Text>
-</View>
+        <Text style={styles.exampleTitle}>How to Fill the Form:</Text>
+        <Text style={styles.exampleText}>
+            GenHlth: 3 (General Health, 1=Excellent → 5=Poor){"\n"}
+            HighBP: 1 (High Blood Pressure, 0=No, 1=Yes){"\n"}
+            BMI: 25 (Body Mass Index){"\n"}
+            Age: 9 (Age Category, see dropdown){"\n"}
+            HighChol: 0 (High Cholesterol, 0=No, 1=Yes){"\n"}
+            CholCheck: 1 (Cholesterol Check in 5 Years, 0=No, 1=Yes){"\n"}
+            Income: 6 (Income Level, see dropdown){"\n"}
+            Sex: 0 (0=Female, 1=Male){"\n"}
+            HeartDiseaseorAttack: 0 (0=No, 1=Yes){"\n"}
+            HvyAlcoholConsump: 0 (0=No, 1=Yes){"\n"}
+            AnyHealthcare: 1 (0=No, 1=Yes){"\n"}
+            DiffWalk: 0 (0=No, 1=Yes){"\n"}
+            PhysActivity: 1 (0=No, 1=Yes){"\n"}
+            Smoker: 1 (0=No, 1=Yes){"\n"}
+            Veggies: 1 (0=No, 1=Yes){"\n"}
+            Fruits: 0 (0=No, 1=Yes){"\n"}
+            Education: 5 (Education Level, see dropdown){"\n"}
+            Stroke: 0 (0=No, 1=Yes)
+        </Text>
+    </View>
+
+
+        {prediction && (
+        <View style={styles.predictionContainer}>
+            <Text
+            style={[
+                styles.predictionText,
+                prediction === "Diabetic" ? styles.diabetic : styles.nonDiabetic
+            ]}
+            >
+            {prediction === "Diabetic"
+                ? "High Risk: Diabetic"
+                : "Low Risk: Non-Diabetic"}
+            </Text>
+        </View>
+        )}
 
       </ScrollView>
     </SafeAreaView>

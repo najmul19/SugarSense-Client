@@ -187,6 +187,21 @@ const styles = StyleSheet.create({
     color: '#555',
     lineHeight: 16,
   },
+  predictionContainer: {
+  marginTop: 20,
+  alignItems: 'center',
+},
+predictionText: {
+  fontSize: 18,
+  fontWeight: 'bold',
+},
+diabetic: {
+  color: '#d32f2f', // red
+},
+nonDiabetic: {
+  color: '#28a745', // green
+},
+
 });
 
 export default styles
