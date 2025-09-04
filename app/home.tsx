@@ -252,7 +252,9 @@ const fieldOptions = {
   return (
     <SafeAreaView style={styles.container}>
       <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.header}>
-       
+       {/* <Ionicons name="medkit" size={32} color="white" style={styles.headerIcon} /> */}
+        <Ionicons name="pulse" size={32} color="white" style={styles.headerIcon} />
+
         <Text style={styles.title}>Diabetes Risk Predictor</Text>
         <Text style={styles.subtitle}>ML-Powered Early Detection System</Text>
       </LinearGradient>
