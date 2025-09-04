@@ -196,10 +196,10 @@ predictionText: {
   fontWeight: 'bold',
 },
 diabetic: {
-  color: '#d32f2f', // red
+  color: '#d32f2f', 
 },
 nonDiabetic: {
-  color: '#28a745', // green
+  color: '#28a745', 
 },
 
 });
