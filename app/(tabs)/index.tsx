@@ -1,6 +1,10 @@
+import { useEffect } from 'react';
 import { router } from 'expo-router';
 
 export default function Index() {
-  router.replace('/home'); 
+  useEffect(() => {
+    router.replace('/home');
+  }, []);
+
   return null;
 }
