@@ -6,6 +6,8 @@ import { Alert, Dimensions, Modal, SafeAreaView, ScrollView, Text, TextInput, To
 import styles from "./styles";
 const { width } = Dimensions.get('window');
 
+
+
 export default function HomeScreen() {
   const [form, setForm] = useState({
     GenHlth: "", HighBP: "", BMI: "", Age: "", HighChol: "", CholCheck: "", Income: "", Sex: "",
