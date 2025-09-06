@@ -1,8 +1,8 @@
-import { View, Text, Modal,TextInput, TouchableOpacity, ScrollView, Alert, StyleSheet, SafeAreaView, Dimensions } from "react-native";
-import { useState } from "react";
-import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useState } from "react";
+import { Alert, Dimensions, Modal, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import styles from "./styles";
 const { width } = Dimensions.get('window');
 
@@ -227,8 +227,8 @@ const fieldOptions = {
        {/* <Ionicons name="medkit" size={32} color="white" style={styles.headerIcon} /> */}
         <Ionicons name="pulse" size={32} color="white" style={styles.headerIcon} />
 
-        <Text style={styles.title}>Diabetes Risk Predictor</Text>
-        <Text style={styles.subtitle}>ML-Powered Early Detection System</Text>
+        <Text style={styles.title}>SugarSense</Text>
+        <Text style={styles.subtitle}>ML-Powered Early Diabetes Detection System</Text>
       </LinearGradient>
       
       <ScrollView style={styles.scrollView}>
